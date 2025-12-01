@@ -7,4 +7,4 @@
 ## Установка
 1. Клонируйте репозиторий:
 ```bash
-git clone https://github.com/ваш_логин/ваш_проект.git
+git clone https://github.com/MaximxLeon/SkyPro.git
