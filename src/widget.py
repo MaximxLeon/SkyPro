@@ -1,5 +1,7 @@
-from src.masks import get_mask_card_number, get_mask_account
 from datetime import datetime
+
+from src.masks import get_mask_account, get_mask_card_number
+
 
 def mask_account_card(data: str) -> str:
     """
@@ -28,7 +30,7 @@ def mask_account_card(data: str) -> str:
     return f"{name} {masked_number}"
 
 
-def get_date(date_str: str):
+def get_date(date_str: str) -> str:
     """
     Преобразует дату формата 'YYYY-MM-DDTHH:MM:SS.mmmmmm'
     в формат 'DD.MM.YYYY'
