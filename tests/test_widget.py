@@ -1,14 +1,17 @@
+import pytest
+
 from src.widget import get_date, mask_account_card
 
 
-def test_mask_account_card_card() -> None:
-    text = "Visa Classic 1234567890123456"
-    assert mask_account_card(text) == "Visa Classic 1234 56** **** 3456"
-
-
-def test_mask_account_card_account() -> None:
-    text = "Счет 73654108430135874305"
-    assert mask_account_card(text) == "Счет **4305"
+@pytest.mark.parametrize(
+    "text,expected",
+    [
+        ("Visa Classic 1234567890123456", "Visa Classic 1234 56** **** 3456"),
+        ("Счет 73654108430135874305", "Счет **4305"),
+    ],
+)
+def test_mask_account_card(text: str, expected: str) -> None:
+    assert mask_account_card(text) == expected
 
 
 def test_get_date() -> None:
