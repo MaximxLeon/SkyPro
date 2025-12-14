@@ -29,7 +29,7 @@ def get_mask_account(account: Union[int, str]) -> str:
     """
     str_account = str(account)
 
-    if len(str_account) < 4:
+    if len(str_account) < 5:
         raise ValueError("Account number must contain at least 4 digits")
 
     return f"**{str_account[-4:]}"
