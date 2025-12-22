@@ -17,3 +17,7 @@ git clone https://github.com/MaximxLeon/SkyPro.git
 ```bash
 pytest
 ```
+## Модуль generators
+
+Модуль `generators` содержит генераторы для эффективной работы с большими
+объёмами транзакционных данных.

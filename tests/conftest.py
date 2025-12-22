@@ -26,3 +26,33 @@ def card_number() -> str:
 @pytest.fixture
 def account_number() -> str:
     return "73654108430135874305"
+
+
+@pytest.fixture
+def transactions() -> List[Dict[str, Any]]:
+    return [
+        {
+            "id": 939719570,
+            "operationAmount": {
+                "amount": "9824.07",
+                "currency": {"name": "USD", "code": "USD"},
+            },
+            "description": "Перевод организации",
+        },
+        {
+            "id": 142264268,
+            "operationAmount": {
+                "amount": "79114.93",
+                "currency": {"name": "USD", "code": "USD"},
+            },
+            "description": "Перевод со счета на счет",
+        },
+        {
+            "id": 873106923,
+            "operationAmount": {
+                "amount": "43318.34",
+                "currency": {"name": "руб.", "code": "RUB"},
+            },
+            "description": "Перевод со счета на счет",
+        },
+    ]
