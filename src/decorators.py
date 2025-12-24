@@ -19,9 +19,9 @@ def log(filename: Optional[str] = None) -> Callable:
         # Добавляем хендлер только если его нет
         if not logger.handlers:
             if filename:
-                handler = logging.FileHandler(filename)
+                handler: logging.Handler = logging.FileHandler(filename)
             else:
-                handler = logging.StreamHandler(sys.stdout)  # выводим в stdout для тестов
+                handler = logging.StreamHandler(sys.stdout)
 
             formatter = logging.Formatter('%(message)s')
             handler.setFormatter(formatter)
