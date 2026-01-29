@@ -1,13 +1,8 @@
 import pytest
-
-from src.generators import (
-    card_number_generator,
-    filter_by_currency,
-    transaction_descriptions,
-)
+from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
 
 
-def test_filter_by_currency_usd(transactions):
+def test_filter_by_currency_usd(transactions: list[dict]) -> None:
     result = list(filter_by_currency(transactions, "USD"))
     assert len(result) == 2
     assert all(
@@ -16,17 +11,17 @@ def test_filter_by_currency_usd(transactions):
     )
 
 
-def test_filter_by_currency_no_matches(transactions):
+def test_filter_by_currency_no_matches(transactions: list[dict]) -> None:
     result = list(filter_by_currency(transactions, "EUR"))
     assert result == []
 
 
-def test_filter_by_currency_empty_list():
+def test_filter_by_currency_empty_list() -> None:
     result = list(filter_by_currency([], "USD"))
     assert result == []
 
 
-def test_transaction_descriptions(transactions):
+def test_transaction_descriptions(transactions: list[dict]) -> None:
     descriptions = list(transaction_descriptions(transactions))
     assert descriptions == [
         "Перевод организации",
@@ -35,7 +30,7 @@ def test_transaction_descriptions(transactions):
     ]
 
 
-def test_transaction_descriptions_empty():
+def test_transaction_descriptions_empty() -> None:
     assert list(transaction_descriptions([])) == []
 
 
@@ -61,5 +56,5 @@ def test_transaction_descriptions_empty():
         ),
     ],
 )
-def test_card_number_generator(start, end, expected):
+def test_card_number_generator(start: int, end: int, expected: list[str]) -> None:
     assert list(card_number_generator(start, end)) == expected
