@@ -1,5 +1,6 @@
 import os
 from typing import Any, Dict
+
 import requests
 from dotenv import load_dotenv
 
@@ -33,11 +34,11 @@ def convert_transaction_to_rub(transaction: Dict[str, Any]) -> float:
         "amount": str(amount),
     }
 
-    response: requests.get(BASE_URL, headers=headers, params=params)
+    # ✅ Исправлено присваивание
+    response: requests.Response = requests.get(BASE_URL, headers=headers, params=params)
     response.raise_for_status()
 
     data: Dict[str, Any] = response.json()
-    # Берем именно ключ 'result' из ответа
     converted_amount: float = float(data["result"])
 
     return converted_amount

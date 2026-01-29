@@ -1,7 +1,10 @@
 import json
-import pytest
 from unittest.mock import mock_open, patch
+
+import pytest
+
 from src.utils.operations import load_operations
+
 
 def test_load_operations_success():
     mock_data = [
