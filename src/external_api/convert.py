@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 API_KEY: str | None = os.getenv("API_KEY")
-BASE_URL: str = "https://api.apilayer.com/exchangerates_data/latest"
+BASE_URL: str = "https://api.apilayer.com/exchangerates_data/convert"
 
 
 def convert_transaction_to_rub(transaction: Dict[str, Any]) -> float:
@@ -28,12 +28,17 @@ def convert_transaction_to_rub(transaction: Dict[str, Any]) -> float:
         raise RuntimeError("API_KEY not found in environment variables")
 
     headers: dict[str, str] = {"apikey": API_KEY}
-    params: dict[str, str] = {"base": currency, "symbols": "RUB"}
+    params: dict[str, str] = {
+        "from": currency,
+        "to": "RUB",
+        "amount": str(amount),
+    }
 
+    # ✅ Исправлено присваивание
     response: requests.Response = requests.get(BASE_URL, headers=headers, params=params)
     response.raise_for_status()
 
     data: Dict[str, Any] = response.json()
-    rate: float = float(data["rates"]["RUB"])
+    converted_amount: float = float(data["result"])
 
-    return amount * rate
+    return converted_amount
