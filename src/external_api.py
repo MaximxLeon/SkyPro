@@ -34,7 +34,7 @@ def convert_transaction_to_rub(transaction: Dict[str, Any]) -> float:
         "amount": str(amount),
     }
 
-    # ✅ Исправлено присваивание
+
     response: requests.Response = requests.get(BASE_URL, headers=headers, params=params)
     response.raise_for_status()
 
