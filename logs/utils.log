@@ -1,0 +1,8 @@
+2026-02-02 19:55:08,028 | src.utils | DEBUG | Попытка загрузки файла: dummy.json
+2026-02-02 19:55:08,028 | src.utils | INFO | Файл dummy.json успешно загружен, операций: 2
+2026-02-02 19:55:08,029 | src.utils | DEBUG | Попытка загрузки файла: nonexistent.json
+2026-02-02 19:55:08,029 | src.utils | ERROR | Файл не найден: nonexistent.json
+2026-02-02 19:55:08,031 | src.utils | DEBUG | Попытка загрузки файла: dummy.json
+2026-02-02 19:55:08,031 | src.utils | ERROR | Ошибка декодирования JSON: Expecting value: line 1 column 1 (char 0)
+2026-02-02 19:55:08,033 | src.utils | DEBUG | Попытка загрузки файла: dummy.json
+2026-02-02 19:55:08,033 | src.utils | ERROR | JSON не является списком
