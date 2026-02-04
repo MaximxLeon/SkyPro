@@ -1,7 +1,9 @@
 import json
 from unittest.mock import mock_open, patch
 
-from src.utils import load_operations
+import pandas as pd
+
+from src.utils import load_operations, load_operations_csv, load_operations_excel
 
 
 def test_load_operations_success():
@@ -34,3 +36,69 @@ def test_load_operations_not_list():
     with patch("builtins.open", m):
         result = load_operations("dummy.json")
         assert result == []
+
+
+def test_load_operations_csv_success():
+    mock_csv_data = (
+        "id;state;date;amount;currency_name;currency_code;from;to;description\n"
+        "650703;EXECUTED;2023-09-05T11:30:32Z;16210;Sol;PEN;"
+        "Счет 58803664561298323391;Счет 39745660563456619397;Перевод организации"
+    )
+
+    m = mock_open(read_data=mock_csv_data)
+
+    with patch("builtins.open", m):
+        result = load_operations_csv("transactions.csv")
+
+        expected = [
+            {
+                "id": "650703",
+                "state": "EXECUTED",
+                "date": "2023-09-05T11:30:32Z",
+                "amount": "16210",
+                "currency_name": "Sol",
+                "currency_code": "PEN",
+                "from": "Счет 58803664561298323391",
+                "to": "Счет 39745660563456619397",
+                "description": "Перевод организации",
+            }
+        ]
+
+        assert result == expected
+
+
+def test_load_operations_excel_success():
+    mock_df = pd.DataFrame(
+        [
+            {
+                "id": 650703,
+                "state": "EXECUTED",
+                "date": "2023-09-05T11:30:32Z",
+                "amount": 16210,
+                "currency_name": "Sol",
+                "currency_code": "PEN",
+                "from": "Счет 58803664561298323391",
+                "to": "Счет 39745660563456619397",
+                "description": "Перевод организации",
+            }
+        ]
+    )
+
+    with patch("src.utils.pd.read_excel", return_value=mock_df):
+        result = load_operations_excel("transactions.xlsx")
+
+        expected = [
+            {
+                "id": 650703,
+                "state": "EXECUTED",
+                "date": "2023-09-05T11:30:32Z",
+                "amount": 16210,
+                "currency_name": "Sol",
+                "currency_code": "PEN",
+                "from": "Счет 58803664561298323391",
+                "to": "Счет 39745660563456619397",
+                "description": "Перевод организации",
+            }
+        ]
+
+        assert result == expected

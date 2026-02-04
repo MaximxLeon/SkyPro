@@ -1,6 +1,9 @@
+import csv
 import json
 import logging
-from typing import Any, Dict, List
+from typing import Any, Dict, Hashable, List
+
+import pandas as pd
 
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
@@ -41,4 +44,50 @@ def load_operations(path: str) -> List[Dict[str, Any]]:
 
     except json.JSONDecodeError as error:
         logger.error(f"Ошибка декодирования JSON: {error}")
+        return []
+
+
+def load_operations_csv(path: str) -> List[Dict[str, Any]]:
+    logger.debug(f"Попытка загрузки CSV файла: {path}")
+
+    try:
+        with open(path, "r", encoding="utf-8") as file:
+            reader = csv.DictReader(file, delimiter=";")
+            data = list(reader)
+
+            logger.info(
+                f"CSV файл {path} успешно загружен, операций: {len(data)}"
+            )
+            return data
+
+    except FileNotFoundError:
+        logger.error(f"Файл не найден: {path}")
+        return []
+
+    except Exception as error:
+        logger.error(f"Ошибка при загрузке CSV файла: {error}")
+        return []
+
+
+def load_operations_excel(path: str) -> List[Dict[Hashable, Any]]:
+    """
+    Загружает финансовые транзакции из Excel-файла.
+    """
+    logger.debug(f"Попытка загрузки Excel файла: {path}")
+
+    try:
+        df = pd.read_excel(path)
+        data = df.to_dict(orient="records")
+
+        logger.info(
+            f"Excel файл {path} успешно загружен, операций: {len(data)}"
+        )
+        return data
+
+    except FileNotFoundError:
+        logger.error(f"Файл не найден: {path}")
+        return []
+
+    except Exception as error:
+        logger.error(f"Ошибка при загрузке Excel файла: {error}")
         return []
