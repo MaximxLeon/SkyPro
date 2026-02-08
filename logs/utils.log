@@ -1,12 +1,2 @@
-2026-02-04 21:25:21,251 | src.utils | DEBUG | Попытка загрузки файла: dummy.json
-2026-02-04 21:25:21,252 | src.utils | INFO | Файл dummy.json успешно загружен, операций: 2
-2026-02-04 21:25:21,253 | src.utils | DEBUG | Попытка загрузки файла: nonexistent.json
-2026-02-04 21:25:21,253 | src.utils | ERROR | Файл не найден: nonexistent.json
-2026-02-04 21:25:21,255 | src.utils | DEBUG | Попытка загрузки файла: dummy.json
-2026-02-04 21:25:21,255 | src.utils | ERROR | Ошибка декодирования JSON: Expecting value: line 1 column 1 (char 0)
-2026-02-04 21:25:21,257 | src.utils | DEBUG | Попытка загрузки файла: dummy.json
-2026-02-04 21:25:21,257 | src.utils | ERROR | JSON не является списком
-2026-02-04 21:25:21,259 | src.utils | DEBUG | Попытка загрузки CSV файла: transactions.csv
-2026-02-04 21:25:21,260 | src.utils | INFO | CSV файл transactions.csv успешно загружен, операций: 1
-2026-02-04 21:25:21,262 | src.utils | DEBUG | Попытка загрузки Excel файла: transactions.xlsx
-2026-02-04 21:25:21,264 | src.utils | INFO | Excel файл transactions.xlsx успешно загружен, операций: 1
+2026-02-08 21:37:31,350 | src.utils | DEBUG | Попытка загрузки Excel файла: data/transactions_excel.xlsx
+2026-02-08 21:37:31,548 | src.utils | INFO | Excel файл data/transactions_excel.xlsx успешно загружен, операций: 1000

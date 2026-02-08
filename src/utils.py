@@ -1,7 +1,8 @@
 import csv
 import json
 import logging
-from typing import Any, Dict, Hashable, List
+import re
+from typing import Any, Dict, List
 
 import pandas as pd
 
@@ -69,7 +70,7 @@ def load_operations_csv(path: str) -> List[Dict[str, Any]]:
         return []
 
 
-def load_operations_excel(path: str) -> List[Dict[Hashable, Any]]:
+def load_operations_excel(path: str) -> List[Dict[str, Any]]:
     """
     Загружает финансовые транзакции из Excel-файла.
     """
@@ -77,7 +78,9 @@ def load_operations_excel(path: str) -> List[Dict[Hashable, Any]]:
 
     try:
         df = pd.read_excel(path)
-        data = df.to_dict(orient="records")
+        data: List[Dict[str, Any]] = [
+            {str(k): v for k, v in record.items()} for record in df.to_dict(orient="records")
+        ]
 
         logger.info(
             f"Excel файл {path} успешно загружен, операций: {len(data)}"
@@ -91,3 +94,24 @@ def load_operations_excel(path: str) -> List[Dict[Hashable, Any]]:
     except Exception as error:
         logger.error(f"Ошибка при загрузке Excel файла: {error}")
         return []
+
+
+def process_bank_search(data: List[Dict[str, Any]], search: str) -> List[Dict[str, Any]]:
+    """
+    Фильтрует список транзакций по ключевому слову в описании.
+    """
+    pattern = re.compile(re.escape(search), re.IGNORECASE)
+    return [operation for operation in data if "description" in operation and pattern.search(operation["description"])]
+
+
+def process_bank_operations(data: List[Dict[str, Any]], categories: List[str]) -> Dict[str, int]:
+    """
+    Подсчитывает количество операций в каждой категории по описанию.
+    """
+    result: Dict[str, int] = {category: 0 for category in categories}
+    for operation in data:
+        description = str(operation.get("description", ""))
+        for category in categories:
+            if category.lower() in description.lower():
+                result[category] += 1
+    return result
